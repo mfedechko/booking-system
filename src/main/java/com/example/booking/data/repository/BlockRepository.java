@@ -13,12 +13,10 @@ import java.util.List;
 public interface BlockRepository extends JpaRepository<Block, Long> {
 
     @Query("""
-            select bl from Block bl
-            where bl.propertyId = :propertyId
-              and bl.startDate < :endDate
-              and bl.endDate > :startDate
-            """)
-    List<Block> findOverlappingBlocks(Long propertyId,
-                                      LocalDate startDate,
-                                      LocalDate endDate);
+           select b.propertyId  from Block b
+           where b.startDate >= :startDate
+             and b.endDate <= :endDate
+           """)
+    List<Long> findBookedBlocks(LocalDate startDate,
+                               LocalDate endDate);
 }

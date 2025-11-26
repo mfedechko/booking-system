@@ -20,6 +20,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "property_id")
     private Long propertyId;
 
     private String guestName;

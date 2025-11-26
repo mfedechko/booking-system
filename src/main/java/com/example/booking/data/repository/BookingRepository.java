@@ -10,30 +10,15 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("""
-            select b from Booking b
-            where b.propertyId = :propertyId
-              and b.status <> :canceledStatus
-              and b.startDate < :endDate
-              and b.endDate > :startDate
-            """)
-    List<Booking> findOverlappingBookings(Long propertyId,
-                                          BookingStatus canceledStatus,
-                                          LocalDate startDate,
-                                          LocalDate endDate);
 
     @Query("""
-            select b from Booking b
-            where b.propertyId = :propertyId
-              and b.status <> :canceledStatus
-              and b.id <> :excludeId
-              and b.startDate < :endDate
-              and b.endDate > :startDate
-            """)
-    List<Booking> findOverlappingBookingsExcluding(Long propertyId,
-                                                   BookingStatus canceledStatus,
-                                                   LocalDate startDate,
-                                                   LocalDate endDate,
-                                                   Long excludeId);
+               select b.propertyId from Booking b
+               where b.startDate >= :startDay 
+               and b.endDate <= :endDay 
+               and b.status = :status
+           """)
+    List<Long> findBookedProperties(BookingStatus status,
+                                    LocalDate startDate,
+                                    LocalDate endDate);
 
 }

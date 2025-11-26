@@ -7,7 +7,7 @@ import com.example.booking.data.entity.Block;
 import com.example.booking.data.repository.BlockRepository;
 import com.example.booking.data.repository.BookingRepository;
 import com.example.booking.exception.BlockNotFoundException;
-import com.example.booking.exception.OverlapException;
+import com.example.booking.exception.PropertyBookedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,7 +64,7 @@ public class BlockService {
 
     private void validateDateRange(java.time.LocalDate start, java.time.LocalDate end) {
         if (!end.isAfter(start)) {
-            throw new OverlapException("End date must be after start date");
+            throw new PropertyBookedException("End date must be after start date");
         }
     }
 
@@ -77,14 +77,14 @@ public class BlockService {
                 .toList();
 
         if (!overlappingBlocks.isEmpty()) {
-            throw new OverlapException("Block overlaps with another block");
+            throw new PropertyBookedException("Block overlaps with another block");
         }
 
         var overlappingBookings = bookingRepository.findOverlappingBookings(
                 propertyId, BookingStatus.CANCELED, start, end);
 
         if (!overlappingBookings.isEmpty()) {
-            throw new OverlapException("Block overlaps with active bookings");
+            throw new PropertyBookedException("Block overlaps with active bookings");
         }
     }
 
