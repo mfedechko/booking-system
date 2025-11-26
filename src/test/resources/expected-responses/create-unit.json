@@ -1,0 +1,8 @@
+{
+  "id" : 1,
+  "rooms" : 2,
+  "type" : "APARTMENTS",
+  "floor" : 3,
+  "basePrice" : 500,
+  "description" : "Test unit"
+}

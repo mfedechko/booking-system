@@ -1,0 +1,49 @@
+{
+  "content" : [ {
+    "id" : 1,
+    "rooms" : 3,
+    "type" : "HOME",
+    "floor" : 1,
+    "basePrice" : 300.0,
+    "description" : "Small flat near center"
+  }, {
+    "id" : 2,
+    "rooms" : 1,
+    "type" : "APARTMENTS",
+    "floor" : 5,
+    "basePrice" : 20.0,
+    "description" : "Small flat near center"
+  }, {
+    "id" : 3,
+    "rooms" : 2,
+    "type" : "FLAT",
+    "floor" : 2,
+    "basePrice" : 100.0,
+    "description" : "Small flat near center"
+  } ],
+  "pageable" : {
+    "pageNumber" : 0,
+    "pageSize" : 20,
+    "sort" : {
+      "unsorted" : true,
+      "sorted" : false,
+      "empty" : true
+    },
+    "offset" : 0,
+    "unpaged" : false,
+    "paged" : true
+  },
+  "totalPages" : 1,
+  "totalElements" : 3,
+  "last" : true,
+  "numberOfElements" : 3,
+  "first" : true,
+  "size" : 20,
+  "number" : 0,
+  "sort" : {
+    "unsorted" : true,
+    "sorted" : false,
+    "empty" : true
+  },
+  "empty" : false
+}

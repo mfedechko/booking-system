@@ -1,0 +1,8 @@
+{
+  "id" : 1,
+  "rooms" : 2,
+  "type" : "FLAT",
+  "floor" : 2,
+  "basePrice" : 20.0,
+  "description" : "Small flat near center"
+}

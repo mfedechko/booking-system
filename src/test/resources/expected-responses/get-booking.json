@@ -1,0 +1,10 @@
+{
+  "id" : 1,
+  "unitId" : 1,
+  "userId" : 1,
+  "dateFrom" : "2026-01-01",
+  "dateTo" : "2026-01-10",
+  "totalCost" : 10350.0,
+  "status" : "PENDING",
+  "createdAt" : "$createdAt$"
+}
