@@ -14,8 +14,8 @@ public interface BlockRepository extends JpaRepository<Block, Long> {
 
     @Query("""
            select b.propertyId  from Block b
-           where b.startDate >= :startDate
-             and b.endDate <= :endDate
+           where b.endDate >= :startDate 
+           and b.startDate <= :endDate 
            """)
     List<Long> findBookedBlocks(LocalDate startDate,
                                LocalDate endDate);

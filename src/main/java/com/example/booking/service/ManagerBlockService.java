@@ -49,8 +49,6 @@ public class ManagerBlockService extends BookingService {
         final var block = blockRepository.findById(id)
                 .orElseThrow(() -> new BlockNotFoundException(id));
 
-        checkIfPropertyBooked(block.getPropertyId(), startDate, endDate);
-
         block.setStartDate(request.getStartDate());
         block.setEndDate(request.getEndDate());
         block.setReason(request.getReason());

@@ -51,17 +51,15 @@ public class GuestBookingService extends BookingService {
     }
 
     @Transactional
-    public BookingResponse update(final Long propertyId,
+    public BookingResponse update(final Long bookingId,
                                   final BookingUpdateRequest request) {
         final var startDate = request.getStartDate();
         final var endDate = request.getEndDate();
 
+        final var booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new BookingNotFoundException(bookingId));
+
         validateDateRange(startDate, endDate);
-        checkIfPropertyBooked(propertyId, startDate, endDate);
-
-        final var booking = bookingRepository.findById(propertyId)
-                .orElseThrow(() -> new BookingNotFoundException(propertyId));
-
         checkBookingUser(request.getGuestEmail(), booking);
 
         booking.setGuestName(request.getGuestName());
@@ -96,6 +94,7 @@ public class GuestBookingService extends BookingService {
 
         checkBookingUser(guestEmail, booking);
         validateDateRange(booking.getStartDate(), booking.getEndDate());
+        checkIfPropertyBooked(booking.getPropertyId(), booking.getStartDate(), booking.getEndDate());
 
         booking.setStatus(BookingStatus.ACTIVE);
         bookingRepository.save(booking);

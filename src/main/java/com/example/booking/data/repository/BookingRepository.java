@@ -13,8 +13,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("""
                select b.propertyId from Booking b
-               where b.startDate >= :startDate 
-               and b.endDate <= :endDate 
+               where b.endDate >= :startDate 
+               and b.startDate <= :endDate 
                and b.status = :status
            """)
     List<Long> findBookedProperties(BookingStatus status,
