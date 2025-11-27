@@ -20,4 +20,18 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", ex.getMessage()));
     }
 
+    @ExceptionHandler(DateRangeException.class)
+    public ResponseEntity<?> handleDateRange(final DateRangeException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(PropertyBookedException.class)
+    public ResponseEntity<?> handlePropertyBooked(final PropertyBookedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", ex.getMessage()));
+    }
+
+    @ExceptionHandler(WrongGuestException.class)
+    public ResponseEntity<?> handleWrongGuest(final WrongGuestException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(Map.of("error", ex.getMessage()));
+    }
 }
