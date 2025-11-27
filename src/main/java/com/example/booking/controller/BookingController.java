@@ -67,8 +67,9 @@ public class BookingController {
 
     @Operation(summary = "Rebook a canceled booking")
     @PostMapping("/{id}/rebook")
-    public ResponseEntity<BookingResponse> rebook(@PathVariable final Long id) {
-        final var rebook = guestBookingService.rebook(id);
+    public ResponseEntity<BookingResponse> rebook(@PathVariable final Long id,
+                                                  @RequestParam(name = "email") final String email) {
+        final var rebook = guestBookingService.rebook(id, email);
         return ResponseEntity.ok(rebook);
     }
 

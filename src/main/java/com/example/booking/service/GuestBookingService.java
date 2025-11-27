@@ -38,6 +38,7 @@ public class GuestBookingService extends BookingService {
         booking.setStartDate(request.getStartDate());
         booking.setEndDate(request.getEndDate());
         booking.setStatus(BookingStatus.ACTIVE);
+        bookingRepository.save(booking);
 
         return EntityMapper.buildBookingResponse(booking);
     }
@@ -85,7 +86,7 @@ public class GuestBookingService extends BookingService {
     }
 
     @Transactional
-    public BookingResponse rebook(final Long id) {
+    public BookingResponse rebook(final Long id, final String guestEmail) {
         final var booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new BookingNotFoundException(id));
 
@@ -93,6 +94,7 @@ public class GuestBookingService extends BookingService {
             throw new PropertyBookedException("Only canceled bookings can be rebooked");
         }
 
+        checkBookingUser(guestEmail, booking);
         validateDateRange(booking.getStartDate(), booking.getEndDate());
 
         booking.setStatus(BookingStatus.ACTIVE);

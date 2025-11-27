@@ -3,7 +3,7 @@
   "propertyId" : 1,
   "guestName" : "guest",
   "guestEmail" : "guest@mail.com",
-  "startDate" : "2026-01-01",
-  "endDate" : "2026-01-10",
+  "startDate" : "2026-01-20",
+  "endDate" : "2026-01-25",
   "status" : "ACTIVE"
 }

@@ -3,6 +3,7 @@ package com.example.booking.data.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.time.LocalDate;
  * @author mfedechko
  */
 @Getter
+@AllArgsConstructor
 public class BookingRequest {
 
     @NotNull
