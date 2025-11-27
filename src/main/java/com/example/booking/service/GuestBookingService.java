@@ -61,6 +61,7 @@ public class GuestBookingService extends BookingService {
 
         validateDateRange(startDate, endDate);
         checkBookingUser(request.getGuestEmail(), booking);
+        checkIfPropertyBookedExcludingBooking(booking.getPropertyId(), startDate, endDate, bookingId, 0L);
 
         booking.setGuestName(request.getGuestName());
         booking.setGuestEmail(request.getGuestEmail());

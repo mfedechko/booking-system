@@ -40,6 +40,32 @@ public class BookingService {
         }
     }
 
+    protected void checkIfPropertyBookedExcludingBooking(final Long propertyId,
+                                                         final LocalDate startDate,
+                                                         final LocalDate endDate,
+                                                         final Long bookingId,
+                                                         final Long blockId) {
+
+        final var bookedProperties =
+                bookingRepository.findBookedPropertiesExcludingBooking(
+                        bookingId,
+                        BookingStatus.ACTIVE,
+                        startDate,
+                        endDate
+                );
+
+        final var bookedBlocks =
+                blockRepository.findBookedBlocksExcludingBlock(blockId, startDate, endDate);
+
+        bookedProperties.addAll(bookedBlocks);
+
+        if (bookedProperties.contains(propertyId)) {
+            throw new PropertyBookedException(
+                    "Property " + propertyId + " is already booked or blocked for these dates"
+            );
+        }
+    }
+
     private List<Long> getAllBookedProperties(final LocalDate startDate,
                                               final LocalDate endDate) {
         final var bookedProperties = bookingRepository.findBookedProperties(BookingStatus.ACTIVE, startDate, endDate);

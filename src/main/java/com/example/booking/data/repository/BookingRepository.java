@@ -12,13 +12,25 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
 
     @Query("""
-               select b.propertyId from Booking b
-               where b.endDate >= :startDate 
-               and b.startDate <= :endDate 
-               and b.status = :status
+           select b.propertyId from Booking b
+           where b.endDate >= :startDate 
+             and b.startDate <= :endDate 
+             and b.status = :status
            """)
     List<Long> findBookedProperties(BookingStatus status,
                                     LocalDate startDate,
                                     LocalDate endDate);
+
+    @Query("""
+           select b.propertyId from Booking b
+           where b.id <> :bookingId
+             and b.status = :status
+             and b.endDate >= :startDate
+             and b.startDate <= :endDate
+           """)
+    List<Long> findBookedPropertiesExcludingBooking(Long bookingId,
+                                                    BookingStatus status,
+                                                    LocalDate startDate,
+                                                    LocalDate endDate);
 
 }

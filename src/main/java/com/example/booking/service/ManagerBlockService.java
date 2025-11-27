@@ -40,14 +40,16 @@ public class ManagerBlockService extends BookingService {
     }
 
     @Transactional
-    public BlockResponse update(final Long id,
+    public BlockResponse update(final Long blockId,
                                 final BlockRequest request) {
         final var startDate = request.getStartDate();
         final var endDate = request.getEndDate();
         validateDateRange(startDate, endDate);
 
-        final var block = blockRepository.findById(id)
-                .orElseThrow(() -> new BlockNotFoundException(id));
+        final var block = blockRepository.findById(blockId)
+                .orElseThrow(() -> new BlockNotFoundException(blockId));
+
+        checkIfPropertyBookedExcludingBooking(block.getPropertyId(), endDate, startDate, 0L, blockId);
 
         block.setStartDate(request.getStartDate());
         block.setEndDate(request.getEndDate());
