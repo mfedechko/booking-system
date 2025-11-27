@@ -1,10 +1,9 @@
 package com.example.booking.controller;
 
-import com.example.booking.data.dto.BookingCancelRequest;
 import com.example.booking.data.dto.BookingRequest;
 import com.example.booking.data.dto.BookingResponse;
 import com.example.booking.data.dto.BookingUpdateRequest;
-import com.example.booking.service.BookingService;
+import com.example.booking.service.GuestBookingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,24 +28,24 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Bookings", description = "Operations with bookings")
 public class BookingController {
 
-    private final BookingService bookingService;
+    private final GuestBookingService guestBookingService;
 
-    public BookingController(final BookingService bookingService) {
-        this.bookingService = bookingService;
+    public BookingController(final GuestBookingService guestBookingService) {
+        this.guestBookingService = guestBookingService;
     }
 
     @Operation(summary = "Create a booking")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BookingResponse> create(@Valid @RequestBody final BookingRequest request) {
-        final var response = bookingService.create(request);
+        final var response = guestBookingService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Operation(summary = "Get booking by id")
     @GetMapping("/{id}")
     public ResponseEntity<BookingResponse> get(@PathVariable final Long id) {
-        final var bookingResponse = bookingService.get(id);
+        final var bookingResponse = guestBookingService.get(id);
         return ResponseEntity.ok(bookingResponse);
     }
 
@@ -53,29 +53,30 @@ public class BookingController {
     @PutMapping("/{id}")
     public ResponseEntity<BookingResponse> update(@PathVariable final Long id,
                                                   @Valid @RequestBody final BookingUpdateRequest request) {
-        final var response = bookingService.update(id, request);
+        final var response = guestBookingService.update(id, request);
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Cancel a booking")
     @PostMapping("/{id}/cancel")
     public ResponseEntity<BookingResponse> cancel(@PathVariable final Long id,
-                                                  @Valid @RequestBody final BookingCancelRequest request) {
-        final var response = bookingService.cancel(id, request.getGuestEmail());
+                                                  @RequestParam(name = "email") final String email) {
+        final var response = guestBookingService.cancel(id, email);
         return ResponseEntity.ok(response);
     }
 
     @Operation(summary = "Rebook a canceled booking")
     @PostMapping("/{id}/rebook")
     public ResponseEntity<BookingResponse> rebook(@PathVariable final Long id) {
-        final var rebook = bookingService.rebook(id);
+        final var rebook = guestBookingService.rebook(id);
         return ResponseEntity.ok(rebook);
     }
 
     @Operation(summary = "Delete a booking from the system")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final Long id) {
-        bookingService.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable final Long id,
+                                       @RequestParam(name = "email") final String email) {
+        guestBookingService.delete(id, email);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
